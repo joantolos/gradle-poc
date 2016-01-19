@@ -2,15 +2,33 @@ group 'com.joantolos.gradle.poc'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
+jar {
+    manifest {
+        attributes(
+                "Manifest-Version" : "1.0",
+                "Implementation-Version" : version,
+                "Main-Class" : "com.joantolos.gradle.poc.HelloGradle"
+        )
+    }
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task greetings {
+    def command = "java -cp build/classes/main/ com.joantolos.gradle.poc.HelloGradle"
+    def process = command.execute()
+    process.waitFor()
+
+    def output = process.in.text
+    println(output)
 }
