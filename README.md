@@ -14,6 +14,8 @@ and then from command line:
 
     gradle idea
     
+At this point, the typical .idea and .iml files are created so you can open the project with IntelliJ. You can use Eclipse as well, just change 'idea' to 'eclipse'.
+    
 ## Building the code
 
 Just type
@@ -105,7 +107,7 @@ You will see all available tasks:
      cleanIdeaWorkspace
      greetings
      
-Take a look at "IDE tasks" where you can find some utilities for your IDE (works with Eclipse as well), and the "Other tasks" at the end, when you can find the task "greetings" manually defined on the build.gradle file.
+Take a look at "IDE tasks" where you can find some utilities for your IDE (works with Eclipse as well), and the "Other tasks" at the end, when you can find the task "greetings" manually defined on the **build.gradle** file.
 
 You can use clean and build as you will do on maven: `` gradle clean build ``
 
@@ -120,4 +122,7 @@ In order to make the jar ready to be execute, you will need to create the MANIFE
             )
         }
     }
-    
+
+## Dependencies
+
+Let's add some random dependency.
