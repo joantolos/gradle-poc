@@ -9,4 +9,5 @@ public class HelloGradle {
     public static String sayHi(){
         return "Hello gradle world";
     }
+
 }

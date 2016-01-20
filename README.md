@@ -125,4 +125,15 @@ In order to make the jar ready to be execute, you will need to create the MANIFE
 
 ## Dependencies
 
-Let's add some random dependency.
+Let's add some random dependency. As an example, we will use the GSON library from Google which offers several operations to work with Json:
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+        compile group: 'com.google.code.gson', name: 'gson', version: '2.5'
+    }
+
+With the dependency line on the build file, you can do the imports from the library correctly.
+
+## Multi - Module project
+
+
