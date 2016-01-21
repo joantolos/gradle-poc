@@ -26,14 +26,14 @@ Just type
 
 Just type
 
-    java -cp build/classes/main/ com.joantolos.gradle.poc.HelloGradle
+    java -cp gradle-poc-core/build/classes/main/ com.joantolos.gradle.poc.core.HelloGradle
 
 ## Executing task
 
 You can define tasks on the Gradle build file, like this one:
 
     task greetings {
-        def command = "java -cp build/classes/main/ com.joantolos.gradle.poc.HelloGradle"
+        def command = "java -cp gradle-poc-core/build/classes/main/ com.joantolos.gradle.poc.core.HelloGradle"
         def process = command.execute()
         process.waitFor()
     
@@ -132,8 +132,49 @@ Let's add some random dependency. As an example, we will use the GSON library fr
         compile group: 'com.google.code.gson', name: 'gson', version: '2.5'
     }
 
-With the dependency line on the build file, you can do the imports from the library correctly.
+With the dependency line on the build file, you can do the imports from the library correctly. You can see that on the class **GsonTest**
 
 ## Multi - Module project
 
+There is two modules on the project, core and utils. On the "parent" build file, you can define behavior for "all projects" and also for the subprojects:
 
+    allprojects {
+        version '1.0-SNAPSHOT'
+    }
+    
+    subprojects {
+    
+        apply plugin: 'java'
+        apply plugin: 'idea'
+    
+        repositories {
+            mavenCentral()
+        }
+    
+        jar {
+            manifest {
+                attributes(
+                        "Manifest-Version" : "1.0",
+                        "Implementation-Version" : version,
+                        "Main-Class" : "com.joantolos.gradle.poc.core.HelloGradle"
+                )
+            }
+        }
+    
+        dependencies {
+            testCompile group: 'junit', name: 'junit', version: '4.11'
+        }
+    }
+
+The parent has to know about the children on the **settings.gradle** file:
+
+    rootProject.name = 'gradle-poc'
+    include 'gradle-poc-core', 'gradle-poc-utils'
+    
+Then the children DO NOT need to know about the parent and that's the most difference with a Maven multi-project. Then, you can define internal project dependencies like this:
+
+    dependencies {
+        compile project(':gradle-poc-utils')
+    }
+
+So, on the example, the utils component has the external Gson dependency and the core component has the internal dependency of utils. You can test that on the **GsonTest** class and the **JsonTest** class both on the core module.

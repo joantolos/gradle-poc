@@ -1,0 +1,17 @@
+group 'com.joantolos.gradle.poc.utils'
+
+sourceCompatibility = 1.8
+
+dependencies {
+    compile project(':gradle-poc-utils')
+}
+
+task greetings {
+    def command = "java -cp gradle-poc-core/build/classes/main/ com.joantolos.gradle.poc.core.HelloGradle"
+    def process = command.execute()
+    process.waitFor()
+
+    def output = process.in.text
+    println(output)
+}
+

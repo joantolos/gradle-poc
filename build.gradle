@@ -1,35 +1,29 @@
 group 'com.joantolos.gradle.poc'
-version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-apply plugin: 'idea'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
+allprojects {
+    version '1.0-SNAPSHOT'
 }
 
-jar {
-    manifest {
-        attributes(
-                "Manifest-Version" : "1.0",
-                "Implementation-Version" : version,
-                "Main-Class" : "com.joantolos.gradle.poc.HelloGradle"
-        )
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
     }
-}
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.5'
-}
+    jar {
+        manifest {
+            attributes(
+                    "Manifest-Version" : "1.0",
+                    "Implementation-Version" : version,
+                    "Main-Class" : "com.joantolos.gradle.poc.core.HelloGradle"
+            )
+        }
+    }
 
-task greetings {
-    def command = "java -cp build/classes/main/ com.joantolos.gradle.poc.HelloGradle"
-    def process = command.execute()
-    process.waitFor()
-
-    def output = process.in.text
-    println(output)
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.11'
+    }
 }
